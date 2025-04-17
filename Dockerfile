@@ -1,13 +1,14 @@
 FROM php:8.2-apache
 
-# Installer mysqli
-RUN docker-php-ext-install mysqli
+# Installer PDO MySQL
+RUN docker-php-ext-install pdo pdo_mysql
 
-# Copier tous les fichiers du projet dans le dossier web de Apache
+# Copier les fichiers du projet dans le répertoire web
 COPY . /var/www/html/
 
-# Changer le port d'écoute si nécessaire
+# Exposer le port sur lequel Apache écoutera (8080 si tu utilises ce port)
 EXPOSE 8080
 
-# Lancer le serveur Apache
+# Lancer Apache
 CMD ["apache2-foreground"]
+
