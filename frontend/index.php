@@ -44,13 +44,21 @@ $translations = [
     ],
 ];
 $t = $translations[$language];
+<?php
+try {
+    $conn = new PDO("mysql:host=localhost;port=3307;dbname=lokaz", "root", "");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$conn = new mysqli("localhost:3307", "root", "", "lokaz");
-if ($conn->connect_error) {
-    die("Erreur de connexion : " . $conn->connect_error);
+    $stmt = $conn->prepare("SELECT titre, image_path, prix, description FROM annonces ORDER BY id DESC LIMIT 6");
+    $stmt->execute();
+
+    $annonces = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    die("Erreur de connexion : " . $e->getMessage());
 }
-$annonces = $conn->query("SELECT titre, image_path, prix, description FROM annonces ORDER BY id DESC LIMIT 6");
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -375,14 +383,14 @@ header {
 <section class="annonces-section">
     <h2 class="annonces-title"><?= $t['articles_title']; ?></h2>
     <div class="annonces-slider">
-        <?php while ($annonce = $annonces->fetch_assoc()) : ?>
-            <div class="annonce-card">
-                <img src="<?= $annonce['image_path']; ?>" alt="<?= $annonce['titre']; ?>">
-                <h3><?= $annonce['titre']; ?></h3>
-                <p class="prix"><?= $annonce['prix']; ?> €</p>
-                <p class="description"><?= $annonce['description']; ?></p>
-            </div>
-        <?php endwhile; ?>
+        <?php foreach ($annonces as $row): ?>
+    <div class="annonce">
+        <h2><?= htmlspecialchars($row['titre']) ?></h2>
+        <img src="<?= htmlspecialchars($row['image_path']) ?>" alt="Image annonce">
+        <p><?= htmlspecialchars($row['description']) ?></p>
+        <p><strong><?= $annonce['prix'] . ' ' . htmlspecialchars($annonce['monnaie']) ?> /jour/day</strong></p>
+    </div>
+<?php endforeach; ?>
     </div>
 </section>
 
