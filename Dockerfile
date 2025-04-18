@@ -1,27 +1,22 @@
-# Utiliser l'image PHP avec Apache
 FROM php:8.2-apache
 
-# Installer les extensions nécessaires (PDO + MySQL)
+# Installer les extensions PHP
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Supprimer le message d'avertissement "ServerName"
+# Corriger le warning ServerName
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Apache écoute sur le port fourni par Render (variable d'environnement $PORT)
-# Attention : on ne met pas EXPOSE ici, Render détecte le port automatiquement
+# Ajouter un script d’entrée pour que Apache écoute sur le bon port dynamique
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Modifier la config d'Apache pour écouter sur ce port dynamique
-RUN sed -i 's/80/${PORT}/g' /etc/apache2/ports.conf && \
-    sed -i 's/80/${PORT}/g' /etc/apache2/sites-enabled/000-default.conf
-
-# Copier les fichiers du projet dans le dossier d'Apache
+# Copier les fichiers du projet
 COPY . /var/www/html/
 
-# Donner les bons droits aux fichiers
-RUN chown -R www-data:www-data /var/www/html
+# Apache doit écouter sur ce port (Render le fournit dynamiquement)
+EXPOSE 10000
 
-# Lancer Apache
-CMD ["apache2-foreground"]
+CMD ["docker-entrypoint.sh"]
 
 
 
