@@ -25,80 +25,73 @@ $photo = !empty($user['photo_profil']) ? "../uploads/" . htmlspecialchars($user[
 </form>
 
 <a href="monprofil.php" class="btn-verifier-identite">Back/Retour</a>
-
 <style>
-    /* Général */
-body {
-    background-color: #f0f0f0;  /* Gris clair pour l'arrière-plan */
-    font-family: Arial, sans-serif;  /* Police simple et lisible */
-    color: #333;  /* Texte en gris foncé pour contraster */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+    body {
+        background-color: #fff; /* fond blanc */
+        color: #4a1410; /* texte brun foncé */
+        font-family: Arial, sans-serif;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
 
-/* Conteneur principal */
-.container {
-    background-color: #ffffff;  /* Fond blanc pour la section */
-    padding: 20px;
-    border-radius: 8px;  /* Coins arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Ombre légère pour l'effet 3D */
-    text-align: center;
-    width: 300px;
-}
+    h2 {
+        font-size: 24px;
+        color: #4a1410; /* brun foncé */
+        margin-bottom: 30px;
+    }
 
-/* Style pour la photo de profil */
-img {
-    border-radius: 50%;  /* Photo circulaire */
-    border: 2px solid #ddd;  /* Bordure gris clair autour de l'image */
-    margin-bottom: 15px;
-}
+    button {
+        background-color: #6e1f1f; /* bordeaux brun */
+        color: #fff;
+        border: 2px solid #4a1410; /* brun foncé */
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 10px;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
 
-/* Formulaire pour changer la photo */
-input[type="file"] {
-    margin: 15px 0;
-    padding: 8px;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    box-sizing: border-box;
-}
+    button:hover {
+        background-color: #4a1410; /* plus sombre au survol */
+        border-color: #4a1410;
+    }
 
-/* Bouton de soumission */
-button {
-    background-color: #cccccc;  /* Gris clair */
-    color: #333;  /* Gris foncé */
-    border: 1px solid #bbb;  /* Bordure gris clair */
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-    margin-top: 10px;
-}
+    .language-switch {
+        display: flex;
+        gap: 10px;
+    }
 
-button:hover {
-    background-color:rgb(165, 161, 161);  /* Gris plus foncé au survol */
-    border-color: #999;
-}
+    .lang-btn {
+        padding: 8px 20px;
+        border-radius: 40px;
+        border: 2px solid #6e1f1f; /* bordeaux brun */
+        background-color: #fff;
+        color: #6e1f1f;
+        font-weight: bold;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
 
-/* Bouton "Retour" */
-a.btn-verifier-identite {
-    display: inline-block;
-    margin-top: 20px;
-    background-color:rgb(175, 169, 169);
-    color: #333;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    text-align: center;
-}
+    .lang-btn.active {
+        background-color: #6e1f1f; /* fond bordeaux brun */
+        color: #fff;
+        border: none;
+    }
 
-a.btn-verifier-identite:hover {
-    background-color:rgb(29, 28, 28);
+    .lang-btn:hover:not(.active) {
+        background-color: #f8eaea; /* léger rosé en survol */
+        color: #6e1f1f;
+    }
+    .btn-verifier-identite:hover, {
+    background-color: #804040; /* Bordeaux brun plus clair */
+    transform: scale(1.05);
+    color: #ffffff;
 }
-    </style>
+</style>
+
