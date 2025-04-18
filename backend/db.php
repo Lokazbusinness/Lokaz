@@ -1,6 +1,6 @@
  <?php
 $host = 'fdb1030.awardspace.net';
-$dbname = 'lokaz';
+$dbname = '4621383_lokaz';
 $username = '4621383_lokaz';
 $password = '200625YAs';
 $port = 3306;
