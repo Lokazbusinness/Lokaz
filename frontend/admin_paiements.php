@@ -136,8 +136,8 @@ foreach ($paiements as $paiement) {
                     <td><?= htmlspecialchars($paiement['methode']) ?></td>
                     <td><?= htmlspecialchars($paiement['reference']) ?></td>
                     <td>
-                        <?php if (!empty($paiement['preuve'])): ?>
-                            <img src="../<?= htmlspecialchars($paiement['preuve']) ?>" alt="Preuve">
+                        <?php if (!empty($paiement['preuve_path'])): ?>
+                            <img src="../uploads/preuves/<?= htmlspecialchars($paiement['preuve_path']) ?>" alt="Preuve">
                         <?php else: ?>
                             Aucune
                         <?php endif; ?>
@@ -175,9 +175,3 @@ function searchTable() {
 
 </body>
 </html>
-
-
-
-
-
-
