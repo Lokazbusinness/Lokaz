@@ -1,20 +1,21 @@
 FROM php:8.2-apache
 
-# Installer les extensions PHP
+# Installer les extensions PHP nécessaires
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Corriger le warning ServerName
-RUN echo "lokaz.onrender.com" >> /etc/apache2/apache2.conf
+# Ajouter ServerName pour éviter les warnings d'Apache
+RUN echo "ServerName lokaz.onrender.com" >> /etc/apache2/apache2.conf
 
-# Ajouter un script d’entrée pour que Apache écoute sur le bon port dynamique
+# Ajouter le script d’entrée personnalisé
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Copier les fichiers du projet
+# Copier tous les fichiers du projet dans le répertoire web
 COPY . /var/www/html/
-# Exposer le port dynamique
-EXPOSE ${PORT}
 
+# Exposer le port par défaut d’Apache (80) — Render s’occupe de la redirection
+EXPOSE 80
+
+# Définir le point d’entrée pour démarrer Apache
 ENTRYPOINT ["docker-entrypoint.sh"]
-
 
