@@ -1,4 +1,8 @@
  <?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $host = 'fdb1030.awardspace.net';
 $dbname = '4621383_lokaz';
 $username = '4621383_lokaz';
