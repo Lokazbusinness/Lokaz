@@ -1,18 +1,21 @@
 FROM php:8.2-apache
 
-# Installer les extensions nécessaires
+# Installer les extensions PHP nécessaires
 RUN docker-php-ext-install pdo pdo_mysql
 
-# Copier les fichiers du projet
+# Créer un fichier de configuration Apache avec la bonne écoute de port
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Changer la configuration par défaut pour écouter sur le bon port (Render -> $PORT)
+RUN sed -i "s/80/\${PORT}/g" /etc/apache2/ports.conf /etc/apache2/sites-enabled/000-default.conf
+
+# Copier tous les fichiers du projet dans le dossier racine d’Apache
 COPY . /var/www/html/
 
-# Configurer Apache pour qu’il écoute sur le port attribué par Render
-RUN sed -i 's/Listen 80/Listen ${PORT}/' /etc/apache2/ports.conf && \
-    sed -i 's/:80/:${PORT}/' /etc/apache2/sites-available/000-default.conf
+# Apache doit écouter sur le port fourni par Render
+EXPOSE $PORT
 
-# Dossier de travail
-WORKDIR /var/www/html/
-
-# Lancer Apache
+# Démarrer Apache
 CMD ["apache2-foreground"]
+
 
