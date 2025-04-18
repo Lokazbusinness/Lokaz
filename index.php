@@ -45,7 +45,7 @@ $translations = [
 ];
 $t = $translations[$language];
 try {
-    $conn = new PDO("mysql:host=localhost;port=3307;dbname=lokaz", "root", "");
+    $conn = new PDO("mysql:host=fdb1030.awardspace.net;port=3306;dbname=4621383_lokaz;charset=utf8", "4621383_lokaz", "200625YAs");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $conn->prepare("SELECT titre, image_path, prix, description FROM annonces ORDER BY id DESC LIMIT 6");
@@ -56,6 +56,7 @@ try {
 } catch (PDOException $e) {
     die("Erreur de connexion : " . $e->getMessage());
 }
+
 ?>
 
 <!DOCTYPE html>
